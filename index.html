@@ -1,28 +1,35 @@
 <!DOCTYPE html>
-    <html lang="en">
-      <head>
-        <meta charset="utf-8">
-        <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>  
-        <link rel="stylesheet" href="main.css">
-        <title>ストップウォッチ</title>
-      </head>
-      <body>
-        <h1>
-          <p>ストップウォッチ</p>
-        </h1>
-        <div id="timer">
-          <span class="time" id="hrs">0</span><span class="colon">:</span>
-          <span class="time" id="mins">0</span><span class="colon">:</span>
-          <span class="time" id="secs">0</span><span class="colon">:</span>
-          <span class="time" id="msec">0</span>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="main.css">
+    <title>電卓</title>
+</head>
+<body>
+    <div id="calculator">
+        <input type="text" id="display" class="display" disabled>
+        <div class="buttons">
+            <button onclick="appendNumber('7')">7</button>
+            <button onclick="appendNumber('8')">8</button>
+            <button onclick="appendNumber('9')">9</button>
+            <button onclick="performOperation('+')">+</button>
+            <button onclick="appendNumber('4')">4</button>
+            <button onclick="appendNumber('5')">5</button>
+            <button onclick="appendNumber('6')">6</button>
+            <button onclick="performOperation('-')">-</button>
+            <button onclick="appendNumber('1')">1</button>
+            <button onclick="appendNumber('2')">2</button>
+            <button onclick="appendNumber('3')">3</button>
+            <button onclick="performOperation('*')">*</button>
+            <button onclick="appendNumber('0')">0</button>
+            <button onclick="appendNumber('00')">00</button>
+            <button onclick="appendNumber('.')">.</button>
+            <button onclick="performOperation('/')">/</button>
+            <button class="twospan" onclick="resetCalculator()">AC</button>
+            <button class="twospan" onclick="calculateResult()">=</button>
         </div>
-
-        <div class="button">
-          <button id="startButton">スタート</button>
-          <button id="stopButton">ストップ</button>
-          <button id="resetButton">リセット</button>
-        </div>
-
-        <script src="main.js"></script>
-      </body>
-    </html>
+    </div>
+    <script src="main.js"></script>
+</body>
+</html>

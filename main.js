@@ -1,66 +1,48 @@
-let milliseconds = 0;
-let seconds = 0;
-let intervalId = null;
+let expression = '';
+let nowDisplayed = false; 
 
-const hrsElement = document.getElementById('hrs');
-const minsElement = document.getElementById('mins');
-const secsElement = document.getElementById('secs');
-const msecElement = document.getElementById('msec');
-const timerElement = document.getElementById('timer');
-const startButton = document.getElementById('startButton');
-const stopButton = document.getElementById('stopButton');
-const resetButton = document.getElementById('resetButton');
-
-function startTimer() {
-    if (intervalId === null) {
-        intervalId = setInterval(function() {
-            milliseconds +=10;
-
-            if (milliseconds >= 1000){
-                milliseconds = 0;
-                seconds++;
-            }
-            
-            let hrs = Math.floor(seconds / 3600);
-            let mins = Math.floor((seconds % 3600) / 60);
-            let secs = seconds % 60;
-            let msec = Math.floor(milliseconds / 100);
-
-            hrsElement.textContent = hrs;
-            minsElement.textContent = mins;
-            secsElement.textContent = secs;
-            msecElement.textContent = msec;
-        }, 10);
+function appendNumber(number) {
+    if (nowDisplayed) {
+        expression = '';
+        nowDisplayed = false;
     }
-    startButton.disabled = true;
-    stopButton.disabled = false;
-    resetButton.disabled = false;
+    if (number === '0' && expression === '0') return;
+    if (number === '00' && expression === '') return;
+    let lastNumber = expression.split(/[\+\-\*\/]/).pop();
+    if (number === '.' && lastNumber.includes('.')) return;
+    expression += number;
+    updateDisplay();
+}
+
+function performOperation(op) {
+    if (nowDisplayed) {
+        nowDisplayed = false;
+    }
+    if (isNaN(expression.slice(-1))) {
+        expression = expression.slice(0, -1) + op;
+    } else {
+        expression += op;
+    }
     
+    updateDisplay();
 }
 
-function stopTimer() {
-    if (intervalId !== null) {
-        clearInterval(intervalId);
-        intervalId = null;
+function calculateResult() {
+    try {
+        expression = eval(expression).toString();
+        nowDisplayed = true;
+    } catch {
+        expression = 'Error';
     }
-    startButton.disabled = false;
-    stopButton.disabled = true;
-    resetButton.disabled = false;
+    updateDisplay();
 }
 
-function resetTimer() {
-    stopTimer();
-    milliseconds = 0;
-    seconds = 0;
-    hrsElement.textContent = '0';
-    minsElement.textContent = '0';
-    secsElement.textContent = '0';
-    msecElement.textContent = '0';
-    startButton.disabled = false;
-    stopButton.disabled = true;
-    resetButton.disabled = true;
+function updateDisplay() {
+    document.getElementById('display').value = expression;
 }
 
-startButton.addEventListener('click', startTimer);
-stopButton.addEventListener('click', stopTimer);
-resetButton.addEventListener('click', resetTimer);
+function resetCalculator() {
+    expression = '';
+    nowDisplayed = false;
+    updateDisplay();
+}
